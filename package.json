@@ -1,0 +1,14 @@
+{
+  "name": "tree-diff",
+  "version": "1.0.0",
+  "description": "git diff in tree form",
+  "main": "main.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "Sean Spearman",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^19.0.2"
+  }
+}
