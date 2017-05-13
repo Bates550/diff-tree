@@ -4,7 +4,8 @@
   "description": "git diff in tree form",
   "main": "main.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "test:d": "node debug --harmony ./node_modules/jest/bin/jest.js --runInBand"
   },
   "author": "Sean Spearman",
   "license": "ISC",
