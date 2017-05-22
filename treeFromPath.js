@@ -27,10 +27,10 @@ function _treeFromPath(path, isFirst) {
       }
     }
   } else if (nextDir !== file) {
-    const stepDown = pathComponents.slice(1).join('/');
+    const nextPath = pathComponents.slice(1).join('/');
     return {
       [currentDir]: {
-        childrenDirs: _treeFromPath(stepDown, false),
+        childrenDirs: _treeFromPath(nextPath, false),
         childrenFiles: [],
       }
     };
