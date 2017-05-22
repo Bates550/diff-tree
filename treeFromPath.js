@@ -2,16 +2,16 @@ function treeFromPath(path) {
   if (path === '') {
     throw new Error('Cannot generate tree from empty path');
   }
-  return _treeFromPath(path, 0);
+  return _treeFromPath(path, true);
 }
 
-function _treeFromPath(path, i) {
+function _treeFromPath(path, isFirst) {
   const pathComponents = path.split('/');
   const currentDir = pathComponents[0];
   const nextDir = pathComponents[1];
   const dirs = pathComponents.slice(1, -1);
   const file = pathComponents[pathComponents.length - 1];
-  if (i === 0) {
+  if (isFirst) {
     if (currentDir === file) {
       return {
         '/': {
@@ -22,7 +22,7 @@ function _treeFromPath(path, i) {
     }
     return {
       '/': {
-        childrenDirs: _treeFromPath(pathComponents.join('/'), i + 1),
+        childrenDirs: _treeFromPath(pathComponents.join('/'), false),
         childrenFiles: [],
       }
     }
@@ -30,7 +30,7 @@ function _treeFromPath(path, i) {
     const stepDown = pathComponents.slice(1).join('/');
     return {
       [currentDir]: {
-        childrenDirs: _treeFromPath(stepDown, i + 1),
+        childrenDirs: _treeFromPath(stepDown, false),
         childrenFiles: [],
       }
     };
