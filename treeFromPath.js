@@ -8,11 +8,8 @@ function _treeFromPath(path, i) {
   const nextDir = pathComponents[1];
   const dirs = pathComponents.slice(1, -1);
   const file = pathComponents[pathComponents.length - 1];
-  debugger;
   if (i === 0) {
-    debugger;
     if (currentDir === file) {
-      debugger;
       return {
         '/': {
           childrenDirs: {},
@@ -20,7 +17,6 @@ function _treeFromPath(path, i) {
         }
       }
     }
-    debugger;
     return {
       '/': {
         childrenDirs: _treeFromPath(pathComponents.join('/'), i + 1),
@@ -29,7 +25,6 @@ function _treeFromPath(path, i) {
     }
   } else if (nextDir !== file) {
     const stepDown = pathComponents.slice(1).join('/');
-    debugger;
     return {
       [currentDir]: {
         childrenDirs: _treeFromPath(stepDown, i + 1),
@@ -37,7 +32,6 @@ function _treeFromPath(path, i) {
       }
     };
   }
-  debugger;
   return {
     [currentDir]: {
       childrenDirs: {},

@@ -56,3 +56,30 @@ test('2 directories deep', () => {
   const result = treeFromPath(input);
   expect(result).toEqual(expected);
 });
+
+test('3 directories deep', () => {
+  const input = 'dir0/dir1/dir2/ghi.txt';
+  const expected = {
+    '/': {
+      childrenDirs: {
+        dir0: {
+          childrenDirs: {
+            dir1: {
+              childrenDirs: {
+                dir2: {
+                  childrenDirs: {},
+                  childrenFiles: ['ghi.txt'],
+                },
+              },
+              childrenFiles: [],
+            }
+          },
+          childrenFiles: [],
+        }
+      },
+      childrenFiles: [],
+    },
+  };
+  const result = treeFromPath(input);
+  expect(result).toEqual(expected);
+});
