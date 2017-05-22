@@ -1,4 +1,7 @@
 function treeFromPath(path) {
+  if (path === '') {
+    throw new Error('Cannot generate tree from empty path');
+  }
   return _treeFromPath(path, 0);
 }
 

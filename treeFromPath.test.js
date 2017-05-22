@@ -6,6 +6,18 @@ const input = [
   'dir0/dir1/ghi.txt',
 ];
 
+test('empty string passed in to throw an error', () => {
+  expect(() => {
+    treeFromPath('')
+  }).toThrow();
+});
+
+test('undefined passed in to throw an error', () => {
+  expect(() => {
+    treeFromPath(undefined)
+  }).toThrow();
+});
+
 test('0 directories deep', () => {
   const input = 'abc.txt';
   const expected = {
