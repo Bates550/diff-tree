@@ -1,10 +1,5 @@
 const ramda = require('ramda');
-const util = require('util');
 const treeFromPath = require('./treeFromPath');
-
-function p(msg, printable) {
-  console.log(msg, util.inspect(printable, false, null));
-}
 
 function mergeChildren(key, left, right) {
   switch(key) {
