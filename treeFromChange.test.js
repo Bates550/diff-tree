@@ -1,54 +1,60 @@
-const treeFromPath = require('./treeFromPath');
-
-const input = [
-  'abc.txt',
-  'dir0/def.txt',
-  'dir0/dir1/ghi.txt',
-];
+const treeFromChange = require('./treeFromChange');
 
 test('empty string passed in to throw an error', () => {
   expect(() => {
-    treeFromPath('')
+    treeFromChange('')
   }).toThrow();
 });
 
 test('undefined passed in to throw an error', () => {
   expect(() => {
-    treeFromPath(undefined)
+    treeFromChange(undefined)
+  }).toThrow();
+});
+
+test('empty object passed in to throw an error', () => {
+  expect(() => {
+    treeFromChange({})
+  }).toThrow();
+});
+
+test('object with empty keys passed in to throw an error', () => {
+  expect(() => {
+    treeFromChange({ path: '', status: '' })
   }).toThrow();
 });
 
 test('0 directories deep', () => {
-  const input = 'abc.txt';
+  const input = { path: 'abc.txt', status: 'M' };
   const expected = {
     '/': {
       childrenDirs: {},
-      childrenFiles: ['abc.txt'],
+      childrenFiles: [{ path: 'abc.txt', status: 'M' }],
     },
   };
-  const result = treeFromPath(input);
+  const result = treeFromChange(input);
   expect(result).toEqual(expected);
 });
 
 test('1 directory deep', () => {
-  const input = 'dir0/def.txt';
+  const input = { path: 'dir0/def.txt', status: 'M' };
   const expected = {
     '/': {
       childrenDirs: {
         dir0: {
           childrenDirs: {},
-          childrenFiles: ['def.txt'],
+          childrenFiles: [{ path: 'def.txt', status: 'M' }],
         }
       },
       childrenFiles: [],
     },
   };
-  const result = treeFromPath(input);
+  const result = treeFromChange(input);
   expect(result).toEqual(expected);
 });
 
 test('2 directories deep', () => {
-  const input = 'dir0/dir1/ghi.txt';
+  const input = { path: 'dir0/dir1/ghi.txt', status: 'M' };
   const expected = {
     '/': {
       childrenDirs: {
@@ -56,7 +62,7 @@ test('2 directories deep', () => {
           childrenDirs: {
             dir1: {
               childrenDirs: {},
-              childrenFiles: ['ghi.txt'],
+              childrenFiles: [{ path: 'ghi.txt', status: 'M' }],
             }
           },
           childrenFiles: [],
@@ -65,12 +71,12 @@ test('2 directories deep', () => {
       childrenFiles: [],
     },
   };
-  const result = treeFromPath(input);
+  const result = treeFromChange(input);
   expect(result).toEqual(expected);
 });
 
 test('3 directories deep', () => {
-  const input = 'dir0/dir1/dir2/ghi.txt';
+  const input = { path: 'dir0/dir1/dir2/ghi.txt', status: 'M' };
   const expected = {
     '/': {
       childrenDirs: {
@@ -80,7 +86,7 @@ test('3 directories deep', () => {
               childrenDirs: {
                 dir2: {
                   childrenDirs: {},
-                  childrenFiles: ['ghi.txt'],
+                  childrenFiles: [{ path: 'ghi.txt', status: 'M' }],
                 },
               },
               childrenFiles: [],
@@ -92,6 +98,6 @@ test('3 directories deep', () => {
       childrenFiles: [],
     },
   };
-  const result = treeFromPath(input);
+  const result = treeFromChange(input);
   expect(result).toEqual(expected);
 });

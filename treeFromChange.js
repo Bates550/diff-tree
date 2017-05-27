@@ -1,11 +1,13 @@
-function treeFromPath(path) {
-  if (path === '') {
+function treeFromChange(change) {
+  if (change.path === '' || change.path === undefined ) {
     throw new Error('Cannot generate tree from empty path');
   }
-  return _treeFromPath(path, true);
+
+  return _treeFromChange(change, true);
 }
 
-function _treeFromPath(path, isFirst) {
+function _treeFromChange(change, isFirst) {
+  const { path, status } = change;
   const pathComponents = path.split('/');
   const currentDir = pathComponents[0];
   const nextDir = pathComponents[1];
@@ -16,13 +18,13 @@ function _treeFromPath(path, isFirst) {
       return {
         '/': {
           childrenDirs: {},
-          childrenFiles: [file],
+          childrenFiles: [{ path: file, status, }],
         }
       }
     }
     return {
       '/': {
-        childrenDirs: _treeFromPath(pathComponents.join('/'), false),
+        childrenDirs: _treeFromChange({ path: pathComponents.join('/'), status }, false),
         childrenFiles: [],
       }
     }
@@ -30,7 +32,7 @@ function _treeFromPath(path, isFirst) {
     const nextPath = pathComponents.slice(1).join('/');
     return {
       [currentDir]: {
-        childrenDirs: _treeFromPath(nextPath, false),
+        childrenDirs: _treeFromChange({ path: nextPath, status }, false),
         childrenFiles: [],
       }
     };
@@ -38,9 +40,9 @@ function _treeFromPath(path, isFirst) {
   return {
     [currentDir]: {
       childrenDirs: {},
-      childrenFiles: [file],
+      childrenFiles: [{ path: file, status }],
     }
   };
 }
 
-module.exports = treeFromPath;
+module.exports = treeFromChange;
