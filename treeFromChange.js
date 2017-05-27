@@ -1,4 +1,10 @@
 function treeFromChange(change) {
+  if (typeof change === 'string') {
+    throw new Error(
+      'treeFromChange expects argument of the form: \
+      { path : String, change : String }'
+    );
+  }
   if (change.path === '' || change.path === undefined ) {
     throw new Error('Cannot generate tree from empty path');
   }

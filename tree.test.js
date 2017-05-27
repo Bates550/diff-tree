@@ -2,12 +2,12 @@ const tree = require('./tree');
 
 test('', () => {
   const input = [
-    'abc.txt',
+    { path: 'abc.txt', status: 'M' },
   ];
   const expected = {
     '/': {
       childrenDirs: {},
-      childrenFiles: ['abc.txt'],
+      childrenFiles: [{ path: 'abc.txt', status: 'M' }],
     },
   };
   const result = tree(input);
@@ -16,18 +16,18 @@ test('', () => {
 
 test('', () => {
   const input = [
-    'abc.txt',
-    'dir0/ghi.txt',
+    { path: 'abc.txt', status: 'M' },
+    { path: 'dir0/ghi.txt', status: 'M' },
   ];
   const expected = {
     '/': {
       childrenDirs: {
         dir0: {
           childrenDirs: {},
-          childrenFiles: ['ghi.txt'],
+          childrenFiles: [{ path: 'ghi.txt', status: 'M' }],
         },
       },
-      childrenFiles: ['abc.txt'],
+      childrenFiles: [{ path: 'abc.txt', status: 'M' }],
     },
   };
   const result = tree(input);
@@ -36,19 +36,22 @@ test('', () => {
 
 test('', () => {
   const input = [
-    'abc.txt',
-    'def.txt',
-    'dir0/ghi.txt',
+    { path: 'abc.txt', status: 'M' },
+    { path: 'def.txt', status: 'M' },
+    { path: 'dir0/ghi.txt', status: 'M' },
   ];
   const expected = {
     '/': {
       childrenDirs: {
         dir0: {
           childrenDirs: {},
-          childrenFiles: ['ghi.txt'],
+          childrenFiles: [{ path: 'ghi.txt', status: 'M' }],
         },
       },
-      childrenFiles: ['abc.txt', 'def.txt'],
+      childrenFiles: [
+        { path: 'abc.txt', status: 'M' },
+        { path: 'def.txt', status: 'M' },
+      ],
     },
   };
   const result = tree(input);
@@ -57,20 +60,26 @@ test('', () => {
 
 test('', () => {
   const input = [
-    'abc.txt',
-    'def.txt',
-    'dir0/ghi.txt',
-    'dir0/jkl.txt',
+    { path: 'abc.txt', status: 'M' },
+    { path: 'def.txt', status: 'M' },
+    { path: 'dir0/ghi.txt', status: 'M' },
+    { path: 'dir0/jkl.txt', status: 'M' },
   ];
   const expected = {
     '/': {
       childrenDirs: {
         dir0: {
           childrenDirs: {},
-          childrenFiles: ['ghi.txt', 'jkl.txt'],
+          childrenFiles: [
+            { path: 'ghi.txt', status: 'M' },
+            { path: 'jkl.txt', status: 'M' },
+          ],
         },
       },
-      childrenFiles: ['abc.txt', 'def.txt'],
+      childrenFiles: [
+        { path: 'abc.txt', status: 'M' },
+        { path: 'def.txt', status: 'M' },
+      ],
     },
   };
   const result = tree(input);
@@ -79,24 +88,27 @@ test('', () => {
 
 test('', () => {
   const input = [
-    'abc.txt',
-    'def.txt',
-    'dir0/ghi.txt',
-    'dir1/jkl.txt',
+    { path: 'abc.txt', status: 'M' },
+    { path: 'def.txt', status: 'M' },
+    { path: 'dir0/ghi.txt', status: 'M' },
+    { path: 'dir1/jkl.txt', status: 'M' },
   ];
   const expected = {
     '/': {
       childrenDirs: {
         dir0: {
           childrenDirs: {},
-          childrenFiles: ['ghi.txt'],
+          childrenFiles: [{ path: 'ghi.txt', status: 'M' }],
         },
         dir1: {
           childrenDirs: {},
-          childrenFiles: ['jkl.txt'],
+          childrenFiles: [{ path: 'jkl.txt', status: 'M' }],
         },
       },
-      childrenFiles: ['abc.txt', 'def.txt'],
+      childrenFiles: [
+        { path: 'abc.txt', status: 'M' },
+        { path: 'def.txt', status: 'M' },
+      ],
     },
   };
   const result = tree(input);
@@ -105,10 +117,10 @@ test('', () => {
 
 test('', () => {
   const input = [
-    'abc.txt',
-    'def.txt',
-    'dir0/ghi.txt',
-    'dir0/dirAlpha/jkl.txt',
+    { path: 'abc.txt', status: 'M' },
+    { path: 'def.txt', status: 'M' },
+    { path: 'dir0/ghi.txt', status: 'M' },
+    { path: 'dir0/dirAlpha/jkl.txt', status: 'M' },
   ];
   const expected = {
     '/': {
@@ -117,13 +129,16 @@ test('', () => {
           childrenDirs: {
             dirAlpha: {
               childrenDirs: {},
-              childrenFiles: ['jkl.txt'],
+              childrenFiles: [{ path: 'jkl.txt', status: 'M' }],
             },
           },
-          childrenFiles: ['ghi.txt'],
+          childrenFiles: [{ path: 'ghi.txt', status: 'M' }],
         },
       },
-      childrenFiles: ['abc.txt', 'def.txt'],
+      childrenFiles: [
+        { path: 'abc.txt', status: 'M' },
+        { path: 'def.txt', status: 'M' },
+      ],
     },
   };
   const result = tree(input);
@@ -132,11 +147,11 @@ test('', () => {
 
 test('', () => {
   const input = [
-    'abc.txt',
-    'def.txt',
-    'dir0/ghi.txt',
-    'dir0/dirAlpha/jkl.txt',
-    'dir0/dirAlpha/mno.txt',
+    { path: 'abc.txt', status: 'M' },
+    { path: 'def.txt', status: 'M' },
+    { path: 'dir0/ghi.txt', status: 'M' },
+    { path: 'dir0/dirAlpha/jkl.txt', status: 'M' },
+    { path: 'dir0/dirAlpha/mno.txt', status: 'M' },
   ];
   const expected = {
     '/': {
@@ -145,13 +160,19 @@ test('', () => {
           childrenDirs: {
             dirAlpha: {
               childrenDirs: {},
-              childrenFiles: ['jkl.txt', 'mno.txt'],
+              childrenFiles: [
+                { path: 'jkl.txt', status: 'M' },
+                { path: 'mno.txt', status: 'M' },
+              ],
             },
           },
-          childrenFiles: ['ghi.txt'],
+          childrenFiles: [{ path: 'ghi.txt', status: 'M' }],
         },
       },
-      childrenFiles: ['abc.txt', 'def.txt'],
+      childrenFiles: [
+        { path: 'abc.txt', status: 'M' },
+        { path: 'def.txt', status: 'M' },
+      ],
     },
   };
   const result = tree(input);

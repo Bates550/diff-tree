@@ -1,5 +1,5 @@
 const ramda = require('ramda');
-const treeFromPath = require('./treeFromPath');
+const treeFromChange = require('./treeFromChange');
 
 function mergeChildren(key, left, right) {
   switch(key) {
@@ -17,7 +17,7 @@ function mergeChildren(key, left, right) {
 
 function tree(paths) {
   return paths.reduce((tree, path) => {
-    const newTree = treeFromPath(path);
+    const newTree = treeFromChange(path);
     const mergedTree = ramda.mergeDeepWithKey(
       mergeChildren,
       tree,
