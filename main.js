@@ -1,7 +1,7 @@
 const exec = require('child_process').exec;
-const tree = require('./tree');
-const diffStrToChanges = require('./diffStrToChanges');
-const print = require('./print');
+const tree = require('./src/tree');
+const diffStrToChanges = require('./src/diffStrToChanges');
+const print = require('./src/print');
 
 const diffAgainstBranch = process.argv[2];
 exec(`git diff --name-status ${diffAgainstBranch}`, (err, stdout, stderr) => {
