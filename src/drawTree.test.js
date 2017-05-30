@@ -11,7 +11,6 @@ test('', () => {
   /\n\
 M └── abc.txt\n\
 ';
-  console.log(expected);
   const result = drawTree(input);
   expect(result).toEqual(expected);
 });
@@ -34,7 +33,6 @@ test('', () => {
 M │   └── ghi.txt\n\
 M └── abc.txt\n\
 ';
-  console.log(expected);
   const result = drawTree(input);
   expect(result).toEqual(expected);
 });
@@ -61,7 +59,6 @@ M │   └── ghi.txt\n\
 M ├── abc.txt\n\
 M └── def.txt\n\
 ';
-  console.log(expected);
   const result = drawTree(input);
   expect(result).toEqual(expected);
 });
@@ -92,7 +89,6 @@ M │   └── jkl.txt\n\
 M ├── abc.txt\n\
 M └── def.txt\n\
 ';
-  console.log(expected);
   const result = drawTree(input);
   expect(result).toEqual(expected);
 });
@@ -125,7 +121,6 @@ M │   └── jkl.txt\n\
 M ├── abc.txt\n\
 M └── def.txt\n\
 ';
-  console.log(expected);
   const result = drawTree(input);
   expect(result).toEqual(expected);
 });
@@ -159,7 +154,6 @@ M │   └── ghi.txt\n\
 M ├── abc.txt\n\
 M └── def.txt\n\
 ';
-  console.log(expected);
   const result = drawTree(input);
   expect(result).toEqual(expected);
 });
@@ -197,7 +191,6 @@ M │   └── ghi.txt\n\
 M ├── abc.txt\n\
 M └── def.txt\n\
 ';
-  console.log(expected);
   const result = drawTree(input);
   expect(result).toEqual(expected);
 });

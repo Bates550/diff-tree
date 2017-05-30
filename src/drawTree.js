@@ -19,8 +19,11 @@ const drawTree = (tree) => {
 const _drawTree = (tree, depth) => {
   return ramda.keys(tree).reduce((treeStr, key) => {
     let growingTreeStr = treeStr;
-    const dirDepthStr = `${CHILD}${HORZ_SPACER}${HORZ_SPACER} `;
-    growingTreeStr = growingTreeStr.concat(`  ${dirDepthStr.repeat(depth)}${key}\n`);
+    const lastDirDepthStr = `${CHILD}${PREFIX_SPACE}`;
+    const numLastDirDepthStrs = depth > 0 ? 1 : 0;
+    const dirDepthStr = `${VERT_SPACER}   `;
+    const numDirDepthStrs = depth <= 0 ? 0 : depth - 1;
+    growingTreeStr = growingTreeStr.concat(`  ${dirDepthStr.repeat(numDirDepthStrs)}${lastDirDepthStr.repeat(numLastDirDepthStrs)}${key}\n`);
     const dir = tree[key];
     if (isNotEmpty(dir.childrenDirs)) {
       growingTreeStr = growingTreeStr.concat(_drawTree(dir.childrenDirs, depth + 1));
