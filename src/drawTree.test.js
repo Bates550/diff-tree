@@ -203,14 +203,31 @@ test('', () => {
           childrenDirs: {},
           childrenFiles: [{ path: 'ghi.txt', status: 'M' }],
         },
-        dir1: {
+      },
+      childrenFiles: [],
+    },
+  };
+  const expected = '\
+  /\n\
+  └── dir0\n\
+M     └── ghi.txt\n\
+';
+  const result = drawTree(input);
+  expect(result).toEqual(expected);
+});
+
+test('', () => {
+  const input = {
+    '/': {
+      childrenDirs:{
+        dir0: {
           childrenDirs: {
-            dirOmega: {
+            dirAlpha: {
               childrenDirs: {},
-              childrenFiles: [{ path: 'apple.txt', status: 'A' }],
+              childrenFiles: [{ path: 'ghi.txt', status: 'M' }],
             },
           },
-          childrenFiles: [{ path: 'wvu.txt', status: 'A' }],
+          childrenFiles: [],
         },
       },
       childrenFiles: [],
@@ -218,12 +235,42 @@ test('', () => {
   };
   const expected = '\
   /\n\
-  ├── dir0\n\
-M │   └── ghi.txt\n\
-  └── dir1\n\
-      ├── dirOmega\n\
-A     │   └── apple.txt\n\
-A     └── wvu.txt\n\
+  └── dir0\n\
+      └── dirAlpha\n\
+M         └── ghi.txt\n\
+';
+  const result = drawTree(input);
+  expect(result).toEqual(expected);
+});
+
+test.only('', () => {
+  const input = {
+    '/': {
+      childrenDirs:{
+        dir0: {
+          childrenDirs: {
+            dirAlpha: {
+              childrenDirs: {
+                dirA: {
+                  childrenDirs: {},
+                  childrenFiles: [{ path: 'ghi.txt', status: 'M' }],
+                },
+              },
+              childrenFiles: [],
+            },
+          },
+          childrenFiles: [],
+        },
+      },
+      childrenFiles: [],
+    },
+  };
+  const expected = '\
+  /\n\
+  └── dir0\n\
+      └── dirAlpha\n\
+          └── dirA\n\
+M             └── ghi.txt\n\
 ';
   const result = drawTree(input);
   expect(result).toEqual(expected);
