@@ -243,7 +243,7 @@ M         └── ghi.txt\n\
   expect(result).toEqual(expected);
 });
 
-test.only('', () => {
+test('', () => {
   const input = {
     '/': {
       childrenDirs:{
