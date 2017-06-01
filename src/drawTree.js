@@ -18,11 +18,14 @@ const drawTree = (tree) => {
 
 const _drawTree = (tree, depth, numSiblingDirs, numSiblingFiles) => {
   return ramda.keys(tree).reduce((treeStr, key, i) => {
+    const isLastDir = i + 1 === numSiblingDirs;
+    const hasNoSiblingFiles = numSiblingFiles === 0;
+    const isLastItem = isLastDir && hasNoSiblingFiles;
     const dir = tree[key];
     let growingTreeStr = treeStr;
-    let lastDirDepthStr = `${i + 1 === numSiblingDirs && numSiblingFiles === 0 ? LAST_CHILD : CHILD}${PREFIX_SPACE}`;
+    let lastDirDepthStr = `${isLastItem ? LAST_CHILD : CHILD}${PREFIX_SPACE}`;
     const numLastDirDepthStrs = depth > 0 ? 1 : 0;
-    const dirDepthStr = `${i + 1 === numSiblingDirs && numSiblingFiles === 0 ? ' ' : VERT_SPACER}   `;
+    const dirDepthStr = `${isLastItem ? ' ' : VERT_SPACER}   `;
     const numDirDepthStrs = depth <= 0 ? 0 : depth - 1;
     growingTreeStr = growingTreeStr.concat(`  ${dirDepthStr.repeat(numDirDepthStrs)}${lastDirDepthStr.repeat(numLastDirDepthStrs)}${key}\n`);
     debugger;
@@ -32,7 +35,7 @@ const _drawTree = (tree, depth, numSiblingDirs, numSiblingFiles) => {
     dir.childrenFiles.map((file, i, files) => {
       const childSymbol = i === files.length - 1 ? LAST_CHILD : CHILD;
       const { status, path } = file;
-      const depthStr = `${i + 1 === numSiblingDirs && numSiblingFiles === 0 ? ' ' : VERT_SPACER}   `.repeat(depth);
+      const depthStr = `${isLastItem ? ' ' : VERT_SPACER}   `.repeat(depth);
       growingTreeStr = growingTreeStr.concat(`${status} ${depthStr}${childSymbol}${PREFIX_SPACE}${path}\n`);
     });
     return growingTreeStr;
