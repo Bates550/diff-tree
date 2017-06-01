@@ -275,3 +275,64 @@ M             └── ghi.txt\n\
   const result = drawTree(input);
   expect(result).toEqual(expected);
 });
+
+test('', () => {
+  const input = {
+    '/': {
+      childrenDirs:{
+        dir0: {
+          childrenDirs: {},
+          childrenFiles: [{ path: 'abc.txt', status: 'M' }],
+        },
+        dir1: {
+          childrenDirs: {},
+          childrenFiles: [{ path: 'ghi.txt', status: 'M' }],
+        }
+      },
+      childrenFiles: [],
+    },
+  };
+  const expected = '\
+  /\n\
+  ├── dir0\n\
+M │   └── abc.txt\n\
+  └── dir1\n\
+M     └── ghi.txt\n\
+';
+  const result = drawTree(input);
+  expect(result).toEqual(expected);
+});
+
+test('', () => {
+  const input = {
+    '/': {
+      childrenDirs:{
+        dir0: {
+          childrenDirs: {},
+          childrenFiles: [{ path: 'abc.txt', status: 'M' }],
+        },
+        dir1: {
+          childrenDirs: {
+            dirAlpha: {
+              childrenDirs: {},
+              childrenFiles: [{ path: 'xyz.txt', status: 'M' }],
+            },
+          },
+          childrenFiles: [{ path: 'ghi.txt', status: 'M' }],
+        }
+      },
+      childrenFiles: [],
+    },
+  };
+  const expected = '\
+  /\n\
+  ├── dir0\n\
+M │   └── abc.txt\n\
+  └── dir1\n\
+      ├── dirAlpha\n\
+M     │   └── xyz.txt\n\
+M     └── ghi.txt\n\
+';
+  const result = drawTree(input);
+  expect(result).toEqual(expected);
+});
