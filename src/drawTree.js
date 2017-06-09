@@ -13,7 +13,7 @@ const isNotEmpty = (x) => {
 };
 
 const drawTree = (tree) => {
-  return _drawTree(tree, 0, 1, 0, true);
+  return _drawTree(tree, 0, 1, 0, []);
 };
 
 const generateFileLine = (file, { isLastChild, isLastItem, depth }) => {
@@ -23,26 +23,38 @@ const generateFileLine = (file, { isLastChild, isLastItem, depth }) => {
   return `${status} ${depthStr}${childSymbol}${PREFIX_SPACE}${path}\n`;
 };
 
-const _drawTree = (tree, depth, numSiblingDirs, numSiblingFiles, isParentLastItem) => {
+const generateDirLine = ({ isLastItem, depth, key }) => {
+  const lastDirDepthStr = `${isLastItem ? LAST_CHILD : CHILD}${PREFIX_SPACE}`;
+  const dirDepthStr = `${isLastItem ? ' ' : VERT_SPACER}   `;
+  const numLastDirDepthStrs = depth > 0 ? 1 : 0;
+  const numDirDepthStrs = depth <= 0 ? 0 : depth - 1;
+  return `  ${dirDepthStr.repeat(numDirDepthStrs)}${lastDirDepthStr.repeat(numLastDirDepthStrs)}${key}\n`
+};
+
+const isLast = (i, numSiblingFiles, numSiblingDirs) => {
+  const isLastDir = i === numSiblingDirs;
+  const hasNoSiblingFiles = numSiblingFiles === 0;
+  return isLastDir && hasNoSiblingFiles;
+};
+
+const _drawTree = (tree, depth, numSiblingDirs, numSiblingFiles, areAncestorsLastChildren) => {
   return ramda.keys(tree).reduce((treeStr, key, i) => {
-    const isLastDir = i === numSiblingDirs;
-    const hasNoSiblingFiles = numSiblingFiles === 0;
-    const isLastItem = isLastDir && hasNoSiblingFiles;
+    const isLastItem = isLast(i, numSiblingFiles, numSiblingDirs);
     const dir = tree[key];
     let growingTreeStr = treeStr;
-    let lastDirDepthStr = `${isLastItem ? LAST_CHILD : CHILD}${PREFIX_SPACE}`;
-    const numLastDirDepthStrs = depth > 0 ? 1 : 0;
-    const dirDepthStr = `${isLastItem ? ' ' : VERT_SPACER}   `;
-    const numDirDepthStrs = depth <= 0 ? 0 : depth - 1;
-    growingTreeStr = growingTreeStr.concat(`  ${dirDepthStr.repeat(numDirDepthStrs)}${lastDirDepthStr.repeat(numLastDirDepthStrs)}${key}\n`);
+    growingTreeStr = growingTreeStr.concat(generateDirLine({
+      isLastItem, 
+      depth,
+      key
+    }));
     debugger;
     if (isNotEmpty(dir.childrenDirs)) {
       growingTreeStr = growingTreeStr.concat(_drawTree(dir.childrenDirs, depth + 1, ramda.keys(dir.childrenDirs).length - 1, dir.childrenFiles.length, isLastItem));
     }
-    dir.childrenFiles.map((file, i, files) => {
+    dir.childrenFiles.map((file, j, files) => {
       const fileLine = generateFileLine(file, {
         depth,
-        isLastChild: i === files.length - 1,
+        isLastChild: j === files.length - 1,
         isLastItem,
       });
       growingTreeStr = growingTreeStr.concat(fileLine);
