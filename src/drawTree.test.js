@@ -1,4 +1,4 @@
-const drawTree = require('./drawTree');
+const { drawTree, generateDepthStr } = require('./drawTree');
 
 test('', () => {
   const input = {
@@ -335,4 +335,41 @@ M     └── ghi.txt\n\
 ';
   const result = drawTree(input);
   expect(result).toEqual(expected);
+});
+
+describe.only('generateDepthStr', () => {
+  test(`should return '' when given []`, () => {
+    const input = []
+    const expected = '';
+    const result = generateDepthStr(input);
+    expect(result).toEqual(expected);
+  });
+
+  test(`should return '   ' when given [true]`, () => {
+    const input = [true]
+    const expected = '    ';
+    const result = generateDepthStr(input);
+    expect(result).toEqual(expected);
+  });
+
+  test(`should return '│  ' when given [false]`, () => {
+    const input = [false]
+    const expected = '│   ';
+    const result = generateDepthStr(input);
+    expect(result).toEqual(expected);
+  });
+
+  test(`should return '    │  ' when given [true, false]`, () => {
+    const input = [true, false]
+    const expected = '    │   ';
+    const result = generateDepthStr(input);
+    expect(result).toEqual(expected);
+  });
+
+  test(`should return '│   │  ' when given [false, false]`, () => {
+    const input = [false, false]
+    const expected = '│   │   ';
+    const result = generateDepthStr(input);
+    expect(result).toEqual(expected);
+  });
 });

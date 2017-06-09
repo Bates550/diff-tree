@@ -16,6 +16,13 @@ const drawTree = (tree) => {
   return _drawTree(tree, 0, 1, 0, []);
 };
 
+const generateDepthStr = (areAncestorsLastChildren) => {
+  return areAncestorsLastChildren.reduce((str, ancestor) => {
+    const spacer = ancestor ? ' ' : VERT_SPACER;
+    return str.concat(`${spacer}   `);
+  }, '');
+}
+
 const generateFileLine = (file, { isLastChild, isLastItem, depth }) => {
   childSymbol = isLastChild ? LAST_CHILD : CHILD;
   const { status, path } = file;
@@ -43,7 +50,7 @@ const _drawTree = (tree, depth, numSiblingDirs, numSiblingFiles, areAncestorsLas
     const dir = tree[key];
     let growingTreeStr = treeStr;
     growingTreeStr = growingTreeStr.concat(generateDirLine({
-      isLastItem, 
+      isLastItem,
       depth,
       key
     }));
@@ -63,4 +70,7 @@ const _drawTree = (tree, depth, numSiblingDirs, numSiblingFiles, areAncestorsLas
   }, '');
 };
 
-module.exports = drawTree;
+module.exports = {
+  drawTree,
+  generateDepthStr,
+};
