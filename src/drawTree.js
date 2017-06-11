@@ -13,29 +13,33 @@ const isNotEmpty = (x) => {
 };
 
 const drawTree = (tree) => {
-  return _drawTree(tree, 0, 1, 0, []);
+  return _drawTree(tree, 0, 0, 0, []);
 };
 
 const generateDepthStr = (areAncestorsLastChildren) => {
-  return areAncestorsLastChildren.reduce((str, ancestor) => {
+  return areAncestorsLastChildren.reduce((str, ancestor, i) => {
+    if (i === 0) {
+      return str;
+    }
     const spacer = ancestor ? ' ' : VERT_SPACER;
     return str.concat(`${spacer}   `);
   }, '');
 }
 
-const generateFileLine = (file, { isLastChild, isLastItem, depth }) => {
-  childSymbol = isLastChild ? LAST_CHILD : CHILD;
+const generateFileLine = (file, { isLastChild, isLastItem, depth, areAncestorsLastChildren }) => {
+  const childSymbol = isLastChild ? LAST_CHILD : CHILD;
   const { status, path } = file;
-  const depthStr = `${isLastItem ? ' ' : VERT_SPACER}   `.repeat(depth);
+  const depthStr = generateDepthStr(areAncestorsLastChildren);
   return `${status} ${depthStr}${childSymbol}${PREFIX_SPACE}${path}\n`;
 };
 
-const generateDirLine = ({ isLastItem, depth, key }) => {
+const generateDirLine = ({ isLastItem, key, areAncestorsLastChildren }) => {
+  const depth = areAncestorsLastChildren.length;
   const lastDirDepthStr = `${isLastItem ? LAST_CHILD : CHILD}${PREFIX_SPACE}`;
-  const dirDepthStr = `${isLastItem ? ' ' : VERT_SPACER}   `;
+  const dirDepthStr = generateDepthStr(areAncestorsLastChildren);
   const numLastDirDepthStrs = depth > 0 ? 1 : 0;
   const numDirDepthStrs = depth <= 0 ? 0 : depth - 1;
-  return `  ${dirDepthStr.repeat(numDirDepthStrs)}${lastDirDepthStr.repeat(numLastDirDepthStrs)}${key}\n`
+  return `  ${dirDepthStr}${lastDirDepthStr.repeat(numLastDirDepthStrs)}${key}\n`
 };
 
 const isLast = (i, numSiblingFiles, numSiblingDirs) => {
@@ -52,19 +56,29 @@ const _drawTree = (tree, depth, numSiblingDirs, numSiblingFiles, areAncestorsLas
     growingTreeStr = growingTreeStr.concat(generateDirLine({
       isLastItem,
       depth,
-      key
+      key,
+      areAncestorsLastChildren,
     }));
-    debugger;
     if (isNotEmpty(dir.childrenDirs)) {
-      growingTreeStr = growingTreeStr.concat(_drawTree(dir.childrenDirs, depth + 1, ramda.keys(dir.childrenDirs).length - 1, dir.childrenFiles.length, isLastItem));
+      growingTreeStr = growingTreeStr.concat(
+        _drawTree(
+          dir.childrenDirs,
+          depth + 1,
+          ramda.keys(dir.childrenDirs).length - 1,
+          dir.childrenFiles.length,
+          areAncestorsLastChildren.concat(isLastItem)
+        )
+      );
     }
     dir.childrenFiles.map((file, j, files) => {
       const fileLine = generateFileLine(file, {
         depth,
         isLastChild: j === files.length - 1,
         isLastItem,
+        areAncestorsLastChildren: areAncestorsLastChildren.concat(isLastItem),
       });
       growingTreeStr = growingTreeStr.concat(fileLine);
+      debugger;
     });
     return growingTreeStr;
   }, '');
@@ -73,4 +87,6 @@ const _drawTree = (tree, depth, numSiblingDirs, numSiblingFiles, areAncestorsLas
 module.exports = {
   drawTree,
   generateDepthStr,
+  generateDirLine,
+  generateFileLine,
 };
