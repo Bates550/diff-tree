@@ -1,7 +1,7 @@
 const exec = require('child_process').exec;
 const tree = require('./src/tree');
 const diffStrToChanges = require('./src/diffStrToChanges');
-const { drawTree } = require('./src/drawTree');
+const drawTree = require('./src/drawTree');
 const print = require('./src/print');
 
 const diffAgainstBranch = process.argv[2];

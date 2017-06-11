@@ -1,4 +1,4 @@
-const { drawTree, generateDepthStr, generateDirLine, generateFileLine } = require('./drawTree');
+const drawTree = require('./drawTree');
 
 test('', () => {
   const input = {
@@ -387,7 +387,7 @@ describe.skip('generateFileLine', () => {
   });
 });
 
-describe('generateDirLine', () => {
+describe.skip('generateDirLine', () => {
   test(`returns '  ├── dir\\n' when is not the last item and depth 1`, () => {
     const input = {
       isLastItem: false,
@@ -444,7 +444,7 @@ describe('generateDirLine', () => {
   });
 });
 
-describe('generateDepthStr', () => {
+describe.skip('generateDepthStr', () => {
   test(`should return '' when given []`, () => {
     const input = []
     const expected = '';
