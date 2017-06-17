@@ -1,6 +1,6 @@
 {
   "name": "diff-tree",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "git diff in tree form",
   "main": "main.js",
   "bin": "./main.js",
@@ -9,7 +9,7 @@
     "test:d": "node debug --harmony ./node_modules/jest/bin/jest.js --runInBand"
   },
   "author": "Sean Spearman",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "jest": "^19.0.2"
   },
