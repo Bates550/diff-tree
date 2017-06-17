@@ -4,6 +4,7 @@
   "description": "git diff in tree form",
   "main": "main.js",
   "bin": "./main.js",
+  "repository": "Bates550/diff-tree",
   "scripts": {
     "test": "jest",
     "test:d": "node debug --harmony ./node_modules/jest/bin/jest.js --runInBand"
