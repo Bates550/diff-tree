@@ -1,5 +1,5 @@
 {
-  "name": "tree-diff",
+  "name": "diff-tree",
   "version": "1.0.0",
   "description": "git diff in tree form",
   "main": "main.js",
