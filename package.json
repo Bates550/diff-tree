@@ -10,7 +10,9 @@
   "author": "Sean Spearman",
   "license": "ISC",
   "devDependencies": {
-    "jest": "^19.0.2",
-    "ramda": "ramda/ramda"
+    "jest": "^19.0.2"
+  },
+  "dependencies": {
+    "ramda": "^0.24.1"
   }
 }
