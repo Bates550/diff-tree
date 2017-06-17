@@ -6,7 +6,7 @@ const diffStrToChanges = require('./src/diffStrToChanges');
 const drawTree = require('./src/drawTree');
 const print = require('./src/print');
 
-const diffAgainstBranch = process.argv[2];
+const diffAgainstBranch = process.argv[2] || 'master';
 exec('git symbolic-ref --short HEAD', (err, stdout, stderr) => {
   const thisBranch = stdout.trim();
   exec(`git diff --name-status ${diffAgainstBranch}...${thisBranch}`, (err, stdout, stderr) => {
