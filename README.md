@@ -32,6 +32,11 @@ diff-tree
 diff-tree <diff-current-branch-against-me>
 ```
 
+You can also pass two branches if you'd like to see a diff without checking out the relevant branch
+```
+diff-tree <branch-A> <branch-B>
+```
+
 ### Installing
 
 Install with npm
