@@ -6,12 +6,21 @@ const diffStrToChanges = require('./src/diffStrToChanges');
 const drawTree = require('./src/drawTree');
 const print = require('./src/print');
 
-const diffAgainstBranch = process.argv[2] || 'master';
-exec('git symbolic-ref --short HEAD', (err, stdout, stderr) => {
-  const thisBranch = stdout.trim();
-  exec(`git diff --name-status ${diffAgainstBranch}...${thisBranch}`, (err, stdout, stderr) => {
+const execDiffandDrawTree = (branchB) => {
+  exec(`git diff --name-status ${diffAgainstBranch}...${branchB}`, (err, stdout, stderr) => {
     const changes = diffStrToChanges(stdout);
     const treeData = tree(changes);
     console.log(drawTree(treeData));
   });
-});
+};
+
+const diffAgainstBranch = process.argv[2] || 'master';
+if (process.argv[3] === undefined) {
+  exec('git symbolic-ref --short HEAD', (err, stdout, stderr) => {
+    const checkedOutBranch = stdout.trim();
+    execDiffandDrawTree(checkedOutBranch);
+  });
+} else {
+  const branchB = process.argv[3];
+  execDiffandDrawTree(branchB);
+}
