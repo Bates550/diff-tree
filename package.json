@@ -1,6 +1,6 @@
 {
   "name": "diff-tree",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "description": "git diff in tree form",
   "main": "main.js",
   "bin": "./main.js",
