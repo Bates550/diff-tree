@@ -31,12 +31,14 @@ module.exports = (cb) => {
       type: 'autocomplete',
       name: 'diffAgainstBranch',
       message: 'Which branch do you want to compare against?',
+      pageSize: 6,
       source: getBranches,
     }, 
     {
       type: 'autocomplete',
       name: 'targetBranch',
       message: 'What is the target branch?',
+      pageSize: 6,
       source: (answers, input) => (
         new Promise(resolve => {
           branches = branches.filter(br => br !== answers.diffAgainstBranch);

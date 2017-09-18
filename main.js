@@ -32,7 +32,6 @@ if (program.interactive) {
       execDiffandDrawTree(diffAgainstBranch, checkedOutBranch);
     });
   } else {
-    console.log(program.args)
     const branchB = program.args[1];
     execDiffandDrawTree(diffAgainstBranch, branchB);
   }
