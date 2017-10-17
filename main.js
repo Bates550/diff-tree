@@ -9,7 +9,7 @@ const print = require('./src/print');
 const interactive = require('./src/interactive');
 
 const execDiffandDrawTree = (branchA, branchB) => {
-  exec(`git diff --name-status ${branchA}...${branchB}`, (err, stdout, stderr) => {
+  exec(`git diff --name-status --no-renames ${branchA}...${branchB}`, (err, stdout, stderr) => {
     const changes = diffStrToChanges(stdout);
     const treeData = tree(changes);
     console.log(drawTree(treeData));
