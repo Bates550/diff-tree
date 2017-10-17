@@ -7,11 +7,12 @@ inquirer.registerPrompt('autocomplete', autocomplete);
 
 let branches = [];
 
-const fuzzySearch = (input, list) => (
-  fuzzy
+const fuzzySearch = (input, list) => {
+  input = input || '';
+  return fuzzy
     .filter(input, list)
-    .map(el => input ? el.original : el)
-);
+    .map(el => el.original)
+};
 
 const getBranches = (answers, input) => {
   return new Promise((resolve, reject) => {
@@ -19,7 +20,7 @@ const getBranches = (answers, input) => {
       branches = stdout
         .split('\n')
         .map(str => str.replace(/(.+->|\*)/, '').trim())
-        .filter(str => str)
+        .filter(str => str && !/remotes/.test(str))
       resolve(fuzzySearch(input, branches));
     });
   });
